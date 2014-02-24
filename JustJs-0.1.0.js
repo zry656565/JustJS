@@ -2,13 +2,49 @@
     var bindList = [
         {
             name: 'Object',
-            func: [ 'log' ]
+            func: [ 'clone', 'in' ]
         }
     ];
 
     var bind = function () {
-        Object.prototype.log = function (str) {
-            console.log(str);
+        Object.prototype.clone = function () {
+            var obj, i, attr;
+            obj = {};
+
+            for (attr in this) {
+                if (this.hasOwnProperty(attr)) {
+                    if (typeof(this[attr]) === "object") {
+                        if (this[attr] === null) {
+                            obj[attr] = null;
+                        }
+                        else if (Object.prototype.toString.call(this[attr]) === '[object Array]') {
+                            obj[attr] = [];
+                            for (i=0; i<this[attr].length; i++) {
+                                obj[attr].push(this[attr][i].clone());
+                            }
+                        } else {
+                            obj[attr] = this[attr].clone();
+                        }
+                    } else {
+                        Object.defineProperty(obj, attr, Object.getOwnPropertyDescriptor(this, attr));
+                    }
+                }
+            }
+            return obj;
+        };
+
+        Object.prototype.in = function (arr) {
+            if (Object.prototype.toString.call(arr) === '[object Array]') {
+                for (var i=0; i<arr.length; i++) {
+                    if (arr[i] === this.valueOf()) {
+                        return true;
+                    }
+                }
+            }
+            else {
+                console.log('Error 1001: the argument of Object.in() is not an array.');
+            }
+            return false;
         }
     }
 
