@@ -1,10 +1,10 @@
 ((function(){
-    var bindList = [
-        {
-            name: 'Object',
-            func: [ 'clone', 'in' ]
-        }
-    ];
+    var bindList = {
+        object: [ 'clone', 'in', 'equal' ],
+        array: [ 'equal' ],
+        number: [ 'equal' ],
+        string: [ 'equal' ]
+    };
 
     var bind = function () {
         Object.prototype.clone = function () {
@@ -46,15 +46,90 @@
             }
             return false;
         }
+
+        Object.prototype.equal = function (obj) {
+            for (var attr in this) {
+                if (typeof(this[attr]) !== "function") {
+                    if (this.hasOwnProperty(attr) && obj.hasOwnProperty(attr)) {
+                        if (typeof(this[attr]) === "object") {
+                            if (this[attr] === null && obj[attr] === null) { }
+                            else {
+                                if ((this[attr] !== null && obj[attr] === null)
+                                    || (this[attr] === null && obj[attr] !== null))
+                                    { return false; }
+                                else {
+                                    if (!this[attr].equal(obj[attr])) {
+                                        return false;
+                                    }
+                                }
+                            }
+                        } else {
+                            if (this[attr] !== obj[attr]) {
+                                return false;
+                            }
+                        }
+                    }
+                    else {
+                        console.log(3)
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        Array.prototype.equal = function (arr) {
+            var me = this.valueOf();
+            if (me.length !== arr.length) {
+                return false;
+            }
+            for (var i=0; i<me.length; i++) {
+                if (me[i] === undefined && arr[i] === undefined) {
+                    continue;
+                } else if (me[i] !== undefined && arr[i] === undefined) {
+                    return false;
+                } else if (me[i] === undefined && arr[i] !== undefined) {
+                    return false;
+                } else {
+                    if (me[i] !== arr[i]) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        Number.prototype.equal = function (num) {
+            if (this.valueOf() === num) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        String.prototype.equal = function (str) {
+            if (this.valueOf() === str) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     }
 
     var unbind = function () {
-        for (var i=0; i<bindList.length; i++) {
-            if (bindList[i].name === 'Object') {
-                for (var j=0; j<bindList[i].func.length; j++) {
-                    delete Object.prototype[bindList[i].func[j]];
-                }
-            }
+        for (var i=0; i < bindList.object.length; i++) {
+            delete Object.prototype[bindList.object[i]];
+        }
+        for (i=0; i < bindList.array.length; i++) {
+            delete Array.prototype[bindList.array[i]];
+        }
+        for (i=0; i < bindList.string.length; i++) {
+            delete String.prototype[bindList.array[i]];
+        }
+        for (i=0; i < bindList.number.length; i++) {
+            delete Number.prototype[bindList.array[i]];
         }
     }
 
