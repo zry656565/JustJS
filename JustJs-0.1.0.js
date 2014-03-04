@@ -1,6 +1,6 @@
 ((function(){
     var bindList = {
-        object: [ 'clone', 'in', 'equal' ],
+        object: [ 'clone', 'in', 'equal', 'debug' ],
         array: [ 'equal' ],
         number: [ 'equal' ],
         string: [ 'equal' ]
@@ -45,6 +45,10 @@
                 console.log('Error 1001: the argument of Object.in() is not an array.');
             }
             return false;
+        }
+
+        Object.prototype.debug = function (message) {
+            console.log("Debug Message: " + message + ', Value: ' + this.valueOf());
         }
 
         Object.prototype.equal = function (obj) {
