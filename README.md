@@ -4,9 +4,11 @@ JustJS
 JustJS is a Javascript Core Library powered by JerryZou. You can use javascript more easily with JustJS. The sample follows:
 
 Just include this script for using:
+
     <script src="JustJs-0.1.0.js"></script>
 
 And enjoy JustJS:
+
     J(function(){
         var x = 5;
         var y = '5';
