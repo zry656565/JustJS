@@ -1,3 +1,5 @@
+var J;
+
 ((function(){
     var bindList = {
         object: [ 'clone', 'in', 'equal', 'debug' ],
@@ -103,6 +105,36 @@
             return true;
         }
 
+        Array.prototype.swap = function (index1, index2) {
+            var me = this.valueOf();
+            if (index1 < 0 || index1 > me.length) {
+                console.log('Error 2001: the argument index1 of Array.swap(index1, index2) is out of range.');
+            }
+            if (index2 < 0 || index2 > me.length) {
+                console.log('Error 2002: the argument index2 of Array.swap(index1, index2) is out of range.');
+            }
+            if (index1 === index2) {
+                return;
+            }
+            var me = this.valueOf();
+            var tmp = me[index1];
+            me[index1] = me[index2];
+            me[index2] = tmp;
+        }
+
+        Array.prototype.remove = function (index) {
+            var me = this.valueOf();
+            if (index < 0 || index > me.length) {
+                console.log('Error 2011: the argument of Array.remove(index) is out of range.');
+            } else {
+                me.swap(index, me.length - 1);
+                me.pop();
+                for (var i = index; i < me.length - 1; i++) {
+                    me.swap(i, i + 1);
+                }
+            }
+        }
+
         Number.prototype.equal = function (num) {
             if (this.valueOf() === num) {
                 return true;
@@ -137,7 +169,7 @@
         }
     }
 
-    window.J = function (func) {
+    J = function (func) {
         var result;
 
         if (typeof(func)==="function") {
@@ -145,6 +177,15 @@
             result = func();
             unbind();
             return result;
+        }
+        if (typeof(func)==="string") {
+            if (func === 'bind') {
+                bind();
+            } else if (func === 'unbind') {
+                unbind();
+            } else {
+                return func;
+            }
         }
         else {
             return func;
