@@ -13,8 +13,8 @@ And enjoy JustJS:
         var x = 5;
         var y = '5';
         var arr = [1,2,3,4,5];
-        console.log(x.in(arr)); //return true;
-        console.log(y.in(arr)); //return false;
+        console.log(x.at(arr)); //return true;
+        console.log(y.at(arr)); //return false;
 
         var obj_1 = { a:{b:1}, c:[1,2,3] };
         var obj_2 = { a:{b:1}, c:[1,2,3] };
