@@ -1,9 +1,9 @@
-var J;
+var J, JustJS;
 
 ((function(){
     var bindList = {
-        object: [ 'clone', 'in', 'equal', 'debug' ],
-        array: [ 'equal' ],
+        object: [ 'clone', 'at', 'equal', 'debug' ],
+        array: [ 'equal', 'swap', 'remove' ],
         number: [ 'equal' ],
         string: [ 'equal' ]
     };
@@ -35,7 +35,7 @@ var J;
             return obj;
         };
 
-        Object.prototype.in = function (arr) {
+        Object.prototype.at = function (arr) {
             if (Object.prototype.toString.call(arr) === '[object Array]') {
                 for (var i=0; i<arr.length; i++) {
                     if (arr[i] === this.valueOf()) {
@@ -47,16 +47,16 @@ var J;
                 console.log('Error 1001: the argument of Object.in() is not an array.');
             }
             return false;
-        }
+        };
 
         Object.prototype.debug = function (message) {
             console.log("Debug Message: " + message + ', Value: ' + this.valueOf());
-        }
+        };
 
         Object.prototype.equal = function (obj) {
             for (var attr in this) {
-                if (typeof(this[attr]) !== "function") {
-                    if (this.hasOwnProperty(attr) && obj.hasOwnProperty(attr)) {
+                if (this.hasOwnProperty(attr) && obj.hasOwnProperty(attr)) {
+                    if (typeof(this[attr]) !== "function") {
                         if (typeof(this[attr]) === "object") {
                             if (this[attr] === null && obj[attr] === null) { }
                             else {
@@ -75,14 +75,13 @@ var J;
                             }
                         }
                     }
-                    else {
-                        console.log(3)
-                        return false;
-                    }
+                }
+                else {
+                    return false;
                 }
             }
             return true;
-        }
+        };
 
         Array.prototype.equal = function (arr) {
             var me = this.valueOf();
@@ -90,20 +89,18 @@ var J;
                 return false;
             }
             for (var i=0; i<me.length; i++) {
-                if (me[i] === undefined && arr[i] === undefined) {
-                    continue;
-                } else if (me[i] !== undefined && arr[i] === undefined) {
+                if (me[i] !== undefined && arr[i] === undefined) {
                     return false;
                 } else if (me[i] === undefined && arr[i] !== undefined) {
                     return false;
-                } else {
+                } else if (me[i] !== undefined && arr[i] !== undefined) {
                     if (me[i] !== arr[i]) {
                         return false;
                     }
                 }
             }
             return true;
-        }
+        };
 
         Array.prototype.swap = function (index1, index2) {
             var me = this.valueOf();
@@ -116,11 +113,11 @@ var J;
             if (index1 === index2) {
                 return;
             }
-            var me = this.valueOf();
+            me = this.valueOf();
             var tmp = me[index1];
             me[index1] = me[index2];
             me[index2] = tmp;
-        }
+        };
 
         Array.prototype.remove = function (index) {
             var me = this.valueOf();
@@ -133,26 +130,16 @@ var J;
                     me.swap(i, i + 1);
                 }
             }
-        }
+        };
 
         Number.prototype.equal = function (num) {
-            if (this.valueOf() === num) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
+            return this.valueOf() === num;
+        };
 
         String.prototype.equal = function (str) {
-            if (this.valueOf() === str) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-    }
+            return this.valueOf() === str;
+        };
+    };
 
     var unbind = function () {
         for (var i=0; i < bindList.object.length; i++) {
@@ -167,28 +154,26 @@ var J;
         for (i=0; i < bindList.number.length; i++) {
             delete Number.prototype[bindList.array[i]];
         }
-    }
+    };
 
-    J = function (func) {
+    JustJS = function (func) {
         var result;
 
         if (typeof(func)==="function") {
             bind();
             result = func();
             unbind();
-            return result;
         }
-        if (typeof(func)==="string") {
+        else if (typeof(func)==="string") {
             if (func === 'bind') {
                 bind();
             } else if (func === 'unbind') {
                 unbind();
-            } else {
-                return func;
             }
         }
-        else {
-            return func;
-        }
-    }
+
+        return result;
+    };
+    J = JustJS;
+
 })());
