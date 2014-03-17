@@ -22,3 +22,15 @@ And enjoy JustJS:
         console.log( obj_1.equal(obj_2) );  //return true;
     });
 
+If you don't care about polluting the global namespace, you can:
+
+    J('bind');
+    /*
+     * do anything you want with JustJS
+     */
+
+    //And when you don't want to use JustJS any more, you can call J('unbind')
+    J('unbind');
+
+## References
+[Object Methods](https://github.com/zry656565/JustJS/wiki/Object-Method) - methods of Object extended by JustJS
