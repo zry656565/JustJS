@@ -77,7 +77,9 @@ var J, JustJS;
                     }
                 }
                 else {
-                    return false;
+                    if (typeof(this[attr]) !== "function") {
+                        return false;
+                    }
                 }
             }
             return true;
