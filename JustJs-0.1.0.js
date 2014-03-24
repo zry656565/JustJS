@@ -5,7 +5,7 @@ var J, JustJS;
         object: [ 'clone', 'at', 'equal', 'debug' ],
         array: [ 'equal', 'swap', 'remove' ],
         number: [ 'equal' ],
-        string: [ 'equal' ]
+        string: [ 'equal', 'removeSpace', 'holeStr' ]
     };
 
     var bind = function () {
@@ -51,6 +51,7 @@ var J, JustJS;
 
         Object.prototype.debug = function (message) {
             console.log("Debug Message: " + message + ', Value: ' + this.valueOf());
+            return this;
         };
 
         Object.prototype.equal = function (obj) {
@@ -141,6 +142,14 @@ var J, JustJS;
         String.prototype.equal = function (str) {
             return this.valueOf() === str;
         };
+
+        String.prototype.removeSpace = function () {
+            return this.valueOf().replace(/\s/g, '');
+        }
+
+        String.prototype.holeStr = function (start, end) {
+            return this.valueOf().substr(0, start) + this.valueOf().substr(end);
+        }
     };
 
     var unbind = function () {
