@@ -8,7 +8,35 @@ var J, JustJS;
         string: [ 'equal', 'removeSpace', 'holeStr' ]
     };
 
+    var functionContainer = {
+        object: {},
+        array: {},
+        number: {},
+        string: {}
+    };
+
     var bind = function () {
+        for (var i=0; i < bindList.object.length; i++) {
+            if (Object.prototype[bindList.object[i]]) {
+                functionContainer.object[bindList.object[i]] = Object.prototype[bindList.object[i]];
+            }
+        }
+        for (i=0; i < bindList.array.length; i++) {
+            if (Array.prototype[bindList.array[i]]) {
+                functionContainer.array[bindList.array[i]] = Array.prototype[bindList.array[i]];
+            }
+        }
+        for (i=0; i < bindList.string.length; i++) {
+            if (String.prototype[bindList.string[i]]) {
+                functionContainer.string[bindList.string[i]] = String.prototype[bindList.string[i]];
+            }
+        }
+        for (i=0; i < bindList.number.length; i++) {
+            if (Number.prototype[bindList.number[i]]) {
+                functionContainer.number[bindList.number[i]] = Number.prototype[bindList.number[i]];
+            }
+        }
+
         Object.prototype.clone = function () {
             var obj, i, attr;
             obj = {};
@@ -145,7 +173,7 @@ var J, JustJS;
 
         String.prototype.removeSpace = function () {
             return this.valueOf().replace(/\s/g, '');
-        }
+        };
 
         String.prototype.holeStr = function (start, end) {
             return this.valueOf().substr(0, start) + this.valueOf().substr(end);
@@ -153,18 +181,41 @@ var J, JustJS;
     };
 
     var unbind = function () {
+        console.log(functionContainer.hasOwnProperty("clone"));
         for (var i=0; i < bindList.object.length; i++) {
-            delete Object.prototype[bindList.object[i]];
+            if (functionContainer.object.hasOwnProperty(bindList.object[i])) {
+                Object.prototype[bindList.object[i]] = functionContainer.object[bindList.object[i]];
+            } else {
+                delete Object.prototype[bindList.object[i]];
+            }
         }
         for (i=0; i < bindList.array.length; i++) {
-            delete Array.prototype[bindList.array[i]];
+            if (functionContainer.array.hasOwnProperty(bindList.array[i])) {
+                Array.prototype[bindList.array[i]] = functionContainer.array[bindList.array[i]];
+            } else {
+                delete Array.prototype[bindList.array[i]];
+            }
         }
         for (i=0; i < bindList.string.length; i++) {
-            delete String.prototype[bindList.array[i]];
+            if (functionContainer.string.hasOwnProperty(bindList.string[i])) {
+                String.prototype[bindList.string[i]] = functionContainer.string[bindList.string[i]];
+            } else {
+                delete String.prototype[bindList.string[i]];
+            }
         }
         for (i=0; i < bindList.number.length; i++) {
-            delete Number.prototype[bindList.array[i]];
+            if (functionContainer.number.hasOwnProperty(bindList.number[i])) {
+                Number.prototype[bindList.number[i]] = functionContainer.number[bindList.number[i]];
+            } else {
+                delete Number.prototype[bindList.number[i]];
+            }
         }
+        functionContainer = {
+            object: {},
+            array: {},
+            number: {},
+            string: {}
+        };
     };
 
     JustJS = function (func) {
