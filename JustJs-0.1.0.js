@@ -3,7 +3,7 @@ var J, JustJS;
 ((function(){
     var bindList = {
         object: [ 'clone', 'equal', 'at', 'debug' ],
-        array: [ 'clone', 'equal', 'swap', 'remove' ],
+        array: [ 'clone', 'equal', 'swap' ],
         number: [ 'clone', 'equal' ],
         string: [ 'clone', 'equal', 'removeSpace', 'holeStr' ]
     };
@@ -153,19 +153,6 @@ var J, JustJS;
             var tmp = me[index1];
             me[index1] = me[index2];
             me[index2] = tmp;
-        };
-
-        Array.prototype.remove = function (index) {
-            var me = this.valueOf();
-            if (index < 0 || index > me.length) {
-                console.log('Error 2011: the argument of Array.remove(index) is out of range.');
-            } else {
-                me.swap(index, me.length - 1);
-                me.pop();
-                for (var i = index; i < me.length - 1; i++) {
-                    me.swap(i, i + 1);
-                }
-            }
         };
         /* END --- Method of Array */
 
