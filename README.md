@@ -33,4 +33,6 @@ If you don't care about polluting the global namespace, you can:
     J('unbind');
 
 ## References
-[Object Methods](https://github.com/zry656565/JustJS/wiki/Object-Method) - methods of Object extended by JustJS
+[Object Methods](https://github.com/zry656565/JustJS/wiki/Object-Method) - methods of Object extended by JustJS <br/>
+[Array Methods](https://github.com/zry656565/JustJS/wiki/Array-Method) - methods of Array extended by JustJS <br/>
+[String Methods](https://github.com/zry656565/JustJS/wiki/String-Method) - methods of String extended by JustJS <br/>
