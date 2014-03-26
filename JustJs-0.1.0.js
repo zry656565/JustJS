@@ -2,10 +2,10 @@ var J, JustJS;
 
 ((function(){
     var bindList = {
-        object: [ 'clone', 'at', 'equal', 'debug' ],
-        array: [ 'equal', 'swap', 'remove' ],
-        number: [ 'equal' ],
-        string: [ 'equal', 'removeSpace', 'holeStr' ]
+        object: [ 'clone', 'equal', 'at', 'debug' ],
+        array: [ 'clone', 'equal', 'swap', 'remove' ],
+        number: [ 'clone', 'equal' ],
+        string: [ 'clone', 'equal', 'removeSpace', 'holeStr' ]
     };
 
     var functionContainer = {
@@ -37,49 +37,24 @@ var J, JustJS;
             }
         }
 
+        /* method of Object */
         Object.prototype.clone = function () {
-            var obj, i, attr;
-            obj = {};
+            var constructor = this.constructor;
+            var obj = new constructor();
 
-            for (attr in this) {
+            for (var attr in this) {
                 if (this.hasOwnProperty(attr)) {
-                    if (typeof(this[attr]) === "object") {
+                    if (typeof(this[attr]) !== "function") {
                         if (this[attr] === null) {
                             obj[attr] = null;
                         }
-                        else if (Object.prototype.toString.call(this[attr]) === '[object Array]') {
-                            obj[attr] = [];
-                            for (i=0; i<this[attr].length; i++) {
-                                obj[attr].push(this[attr][i].clone());
-                            }
-                        } else {
+                        else {
                             obj[attr] = this[attr].clone();
                         }
-                    } else {
-                        Object.defineProperty(obj, attr, Object.getOwnPropertyDescriptor(this, attr));
                     }
                 }
             }
             return obj;
-        };
-
-        Object.prototype.at = function (arr) {
-            if (Object.prototype.toString.call(arr) === '[object Array]') {
-                for (var i=0; i<arr.length; i++) {
-                    if (arr[i] === this.valueOf()) {
-                        return true;
-                    }
-                }
-            }
-            else {
-                console.log('Error 1001: the argument of Object.in() is not an array.');
-            }
-            return false;
-        };
-
-        Object.prototype.debug = function (message) {
-            console.log("Debug Message: " + message + ', Value: ' + this.valueOf());
-            return this;
         };
 
         Object.prototype.equal = function (obj) {
@@ -91,7 +66,7 @@ var J, JustJS;
                             else {
                                 if ((this[attr] !== null && obj[attr] === null)
                                     || (this[attr] === null && obj[attr] !== null))
-                                    { return false; }
+                                { return false; }
                                 else {
                                     if (!this[attr].equal(obj[attr])) {
                                         return false;
@@ -112,6 +87,36 @@ var J, JustJS;
                 }
             }
             return true;
+        };
+
+        Object.prototype.at = function (arr) {
+            if (Object.prototype.toString.call(arr) === '[object Array]') {
+                for (var i=0; i<arr.length; i++) {
+                    if (arr[i] === this.valueOf()) {
+                        return true;
+                    }
+                }
+            }
+            else {
+                console.log('Error 1001: the argument of Object.in() is not an array.');
+            }
+            return false;
+        };
+
+        Object.prototype.debug = function (message) {
+            console.log("Debug Message: " + message + ', Value: ' + this.valueOf());
+            return this;
+        };
+        /* END --- method of Object */
+
+        /* Method of Array*/
+        Array.prototype.clone = function () {
+            var thisArr = this.valueOf();
+            var newArr = [];
+            for (var i=0; i<thisArr.length; i++) {
+                newArr.push(thisArr[i]);
+            }
+            return newArr;
         };
 
         Array.prototype.equal = function (arr) {
@@ -162,26 +167,22 @@ var J, JustJS;
                 }
             }
         };
+        /* END --- Method of Array */
 
-        Number.prototype.equal = function (num) {
-            return this.valueOf() === num;
-        };
+        /* Method of Number */
+        Number.prototype.clone = function() { return this.valueOf(); };
+        Number.prototype.equal = function (num) { return this.valueOf() === num; };
 
-        String.prototype.equal = function (str) {
-            return this.valueOf() === str;
-        };
-
-        String.prototype.removeSpace = function () {
-            return this.valueOf().replace(/\s/g, '');
-        };
-
+        /* Method of String */
+        String.prototype.clone = function() { return this.valueOf(); };
+        String.prototype.equal = function (str) { return this.valueOf() === str; };
+        String.prototype.removeSpace = function () { return this.valueOf().replace(/\s/g, ''); };
         String.prototype.holeStr = function (start, end) {
             return this.valueOf().substr(0, start) + this.valueOf().substr(end);
         }
     };
 
     var unbind = function () {
-        console.log(functionContainer.hasOwnProperty("clone"));
         for (var i=0; i < bindList.object.length; i++) {
             if (functionContainer.object.hasOwnProperty(bindList.object[i])) {
                 Object.prototype[bindList.object[i]] = functionContainer.object[bindList.object[i]];
