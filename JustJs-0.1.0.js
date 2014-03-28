@@ -3,7 +3,7 @@ var J, JustJS;
 ((function(){
     var bindList = {
         object: [ 'clone', 'equal', 'at', 'debug' ],
-        array: [ 'clone', 'equal', 'swap' ],
+        array: [ 'clone', 'equal', 'swap', 'intersect' ],
         number: [ 'clone', 'equal' ],
         string: [ 'clone', 'equal', 'removeSpace', 'holeStr' ]
     };
@@ -154,6 +154,20 @@ var J, JustJS;
             me[index1] = me[index2];
             me[index2] = tmp;
         };
+
+        Array.prototype.intersect = function (arr) {
+            var me = this.valueOf();
+            var result = [];
+            for (var i = 0; i < me.length; i++) {
+                for (var j = 0; j < arr.length; j++) {
+                    if (me[i] === arr[j]) {
+                        result.push(me[i]);
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
         /* END --- Method of Array */
 
         /* Method of Number */
