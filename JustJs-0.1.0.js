@@ -3,7 +3,7 @@ var J, JustJS;
 ((function(){
     var bindList = {
         object: [ 'clone', 'equal', 'at', 'debug' ],
-        array: [ 'clone', 'equal', 'swap', 'intersect' ],
+        array: [ 'clone', 'equal', 'swap', 'intersect', 'unite' ],
         number: [ 'clone', 'equal' ],
         string: [ 'clone', 'equal', 'removeSpace', 'holeStr' ]
     };
@@ -159,11 +159,19 @@ var J, JustJS;
             var me = this.valueOf();
             var result = [];
             for (var i = 0; i < me.length; i++) {
-                for (var j = 0; j < arr.length; j++) {
-                    if (me[i] === arr[j]) {
-                        result.push(me[i]);
-                        break;
-                    }
+                if (me[i].at(arr)) {
+                    result.push(me[i]);
+                }
+            }
+            return result;
+        }
+
+        Array.prototype.unite = function (arr) {
+            var me = this.valueOf();
+            var result = me.clone();
+            for (var i = 0; i < arr.length; i++) {
+                if (!arr[i].at(result)) {
+                    result.push(arr[i]);
                 }
             }
             return result;
