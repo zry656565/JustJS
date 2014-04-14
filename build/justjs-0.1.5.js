@@ -1,19 +1,19 @@
 var J, JustJS;
 
-((function(){
+((function () {
+    'use strict';
     var bindList = {
-        object: [ 'clone', 'equal', 'at', 'debug' ],
-        array: [ 'clone', 'equal', 'swap', 'intersect', 'unite' ],
-        number: [ 'clone', 'equal' ],
-        string: [ 'clone', 'equal', 'removeSpace', 'holeStr' ]
-    };
-
-    var functionContainer = {
-        object: {},
-        array: {},
-        number: {},
-        string: {}
-    };
+            object: [ 'clone', 'equal', 'at', 'debug' ],
+            array: [ 'clone', 'equal', 'swap', 'intersect', 'unite' ],
+            number: [ 'clone', 'equal' ],
+            string: [ 'clone', 'equal', 'removeSpace', 'holeStr' ]
+        },
+        functionContainer = {
+            object: {},
+            array: {},
+            number: {},
+            string: {}
+        };
 
     var bind = function () {
         for (var i=0; i < bindList.object.length; i++) {
@@ -39,8 +39,8 @@ var J, JustJS;
 
         /* method of Object */
         Object.prototype.clone = function () {
-            var constructor = this.constructor;
-            var obj = new constructor();
+            var Constructor = this.constructor;
+            var obj = new Constructor();
 
             for (var attr in this) {
                 if (this.hasOwnProperty(attr)) {
@@ -64,9 +64,9 @@ var J, JustJS;
                         if (typeof(this[attr]) === "object") {
                             if (this[attr] === null && obj[attr] === null) { }
                             else {
-                                if ((this[attr] !== null && obj[attr] === null)
-                                    || (this[attr] === null && obj[attr] !== null))
-                                { return false; }
+                                if ((this[attr] !== null && obj[attr] === null)|| (this[attr] === null && obj[attr] !== null)){ 
+                                    return false; 
+                                }
                                 else {
                                     if (!this[attr].equal(obj[attr])) {
                                         return false;
@@ -164,7 +164,7 @@ var J, JustJS;
                 }
             }
             return result;
-        }
+        };
 
         Array.prototype.unite = function (arr) {
             var me = this.valueOf();
@@ -175,7 +175,7 @@ var J, JustJS;
                 }
             }
             return result;
-        }
+        };
         /* END --- Method of Array */
 
         /* Method of Number */
@@ -188,7 +188,7 @@ var J, JustJS;
         String.prototype.removeSpace = function () { return this.valueOf().replace(/\s/g, ''); };
         String.prototype.holeStr = function (start, end) {
             return this.valueOf().substr(0, start) + this.valueOf().substr(end);
-        }
+        };
     };
 
     var unbind = function () {

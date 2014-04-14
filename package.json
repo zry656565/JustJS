@@ -1,0 +1,38 @@
+{
+  "name": "justjs",
+  "version": "0.1.5",
+  "devDependencies": {
+    "grunt": "^0.4.4",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-watch": "latest",
+    "grunt-contrib-concat": "latest"
+  },
+  "description": "JustJS is a Javascript Core Library powered by JerryZou. You can use javascript more easily with JustJS. ",
+  "main": "requireJustJS.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zry656565/JustJS.git"
+  },
+  "keywords": [
+    "JustJS"
+  ],
+  "author": {
+    "name": "Jerry Zou"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zry656565/JustJS/issues"
+  },
+  "homepage": "https://github.com/zry656565/JustJS",
+  "readme": "ERROR: No README data found!",
+  "_id": "justjs@0.1.3",
+  "dist": {
+    "shasum": "6559436615ccf19716e43648e685b06bb5fb946d"
+  },
+  "_from": "justjs"
+}
