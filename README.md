@@ -5,7 +5,7 @@ JustJS is a Javascript Core Library powered by JerryZou. You can use javascript 
 
 Just include this script for using:
 
-    <script src="JustJs-0.1.0.js"></script>
+    <script src="JustJs-0.1.5.js"></script>
 
 And enjoy JustJS:
 
