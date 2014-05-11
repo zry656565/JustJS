@@ -1,6 +1,6 @@
 {
   "name": "justjs",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "devDependencies": {
     "grunt": "^0.4.4",
     "grunt-contrib-jshint": "~0.6.3",

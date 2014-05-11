@@ -6,13 +6,17 @@ var J, JustJS;
             object: [ 'clone', 'equal', 'at', 'debug' ],
             array: [ 'clone', 'equal', 'swap', 'intersect', 'unite' ],
             number: [ 'clone', 'equal' ],
-            string: [ 'clone', 'equal', 'removeSpace', 'holeStr' ]
+            string: [ 'clone', 'equal', 'removeSpace', 'holeStr' ],
+            regexp: [ 'clone' ],
+            date: [ 'clone' ]
         },
         functionContainer = {
             object: {},
             array: {},
             number: {},
-            string: {}
+            string: {},
+            regexp: {},
+            date: {}
         };
 
     var bind = function () {
@@ -34,6 +38,16 @@ var J, JustJS;
         for (i=0; i < bindList.number.length; i++) {
             if (Number.prototype[bindList.number[i]]) {
                 functionContainer.number[bindList.number[i]] = Number.prototype[bindList.number[i]];
+            }
+        }
+        for (i=0; i < bindList.number.length; i++) {
+            if (Date.prototype[bindList.date[i]]) {
+                functionContainer.date[bindList.date[i]] = Date.prototype[bindList.date[i]];
+            }
+        }
+        for (i=0; i < bindList.regexp.length; i++) {
+            if (RegExp.prototype[bindList.regexp[i]]) {
+                functionContainer.regexp[bindList.regexp[i]] = RegExp.prototype[bindList.regexp[i]];
             }
         }
 
@@ -189,6 +203,19 @@ var J, JustJS;
         String.prototype.holeStr = function (start, end) {
             return this.valueOf().substr(0, start) + this.valueOf().substr(end);
         };
+
+        /* Method of Date*/
+        Date.prototype.clone = function() { return new Date(this.valueOf()); };
+
+        /* Method of RegExp*/
+        RegExp.prototype.clone = function() {
+            var pattern = this.valueOf();
+            var flags = '';
+            flags += pattern.global ? 'g' : '';
+            flags += pattern.ignoreCase ? 'i' : '';
+            flags += pattern.multiline ? 'm' : '';
+            return new RegExp(pattern.source, flags);
+        };
     };
 
     var unbind = function () {
@@ -220,11 +247,27 @@ var J, JustJS;
                 delete Number.prototype[bindList.number[i]];
             }
         }
+        for (i=0; i < bindList.date.length; i++) {
+            if (functionContainer.date.hasOwnProperty(bindList.date[i])) {
+                Date.prototype[bindList.date[i]] = functionContainer.date[bindList.date[i]];
+            } else {
+                delete Date.prototype[bindList.date[i]];
+            }
+        }
+        for (i=0; i < bindList.regexp.length; i++) {
+            if (functionContainer.regexp.hasOwnProperty(bindList.regexp[i])) {
+                RegExp.prototype[bindList.regexp[i]] = functionContainer.regexp[bindList.regexp[i]];
+            } else {
+                delete RegExp.prototype[bindList.regexp[i]];
+            }
+        }
         functionContainer = {
             object: {},
             array: {},
             number: {},
-            string: {}
+            string: {},
+            date: {},
+            regexp: {}
         };
     };
 
