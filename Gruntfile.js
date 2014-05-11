@@ -7,9 +7,13 @@ module.exports = function(grunt) {
       options: {
         separator: ';'
       },
-      dist: {
-        src: ['src/**/*.js'],
+      target1: {
+        src: ['src/JustJs.js'],
         dest: 'build/<%= pkg.name %>-<%= pkg.version%>.js'
+      },
+      target2: {
+        src: ['src/JustJs.js', 'src/node_support/justjs_ext.js'],
+        dest: 'build/justjs-node.js'
       }
     },
     uglify: {
@@ -43,5 +47,4 @@ module.exports = function(grunt) {
   // Default task(s).
   grunt.registerTask('test', ['jshint']);
   grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
-
 };
