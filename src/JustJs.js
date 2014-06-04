@@ -6,7 +6,7 @@ var J, JustJS;
             object: [ 'clone', 'equal', 'at', 'debug' ],
             array: [ 'clone', 'equal', 'swap', 'intersect', 'unite' ],
             number: [ 'clone', 'equal' ],
-            string: [ 'clone', 'equal', 'removeSpace', 'holeStr' ],
+            string: [ 'clone', 'equal', 'removeSpace', 'holeStr', 'trim' ],
             regexp: [ 'clone' ],
             date: [ 'clone' ]
         },
@@ -203,6 +203,7 @@ var J, JustJS;
         String.prototype.holeStr = function (start, end) {
             return this.valueOf().substr(0, start) + this.valueOf().substr(end);
         };
+		String.prototype.trim = function (str) { return this.valueOf().replace(/^\s*(?:((?:\S+.*\S+)|\S))\s*$/, '$1'); };
 
         /* Method of Date*/
         Date.prototype.clone = function() { return new Date(this.valueOf()); };
