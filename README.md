@@ -5,16 +5,14 @@ JustJS is a Javascript Core Library powered by JerryZou. You can use javascript 
 
 Just include this script for using:
 
-    <script src="JustJs-0.1.5.js"></script>
+    <script src="JustJs-0.1.7.js"></script>
 
 And enjoy JustJS:
 
     J(function(){
-        var x = 5;
-        var y = '5';
-        var arr = [1,2,3,4,5];
-        console.log(x.at(arr)); //return true;
-        console.log(y.at(arr)); //return false;
+        var arr = ['a','b','c','d'];
+        arr.swap(0,2);
+        console.log(arr); //return ['c','b','a','d'];
 
         var obj_1 = { a:{b:1}, c:[1,2,3] };
         var obj_2 = { a:{b:1}, c:[1,2,3] };
