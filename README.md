@@ -1,3 +1,8 @@
+>Update: 
+JustJS had been no longer maintained. Please see the new version of it:
+- Github: https://github.com/cherryjs/cherry.js
+- Home Page: http://cherryjs.com
+
 JustJS
 ======
 
